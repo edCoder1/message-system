@@ -9,6 +9,8 @@ app.route('/health')
     console.log('checking health');
 
     return res.send('All OK!');
-  })
+  });
+
+
 
 app.listen(PORT, () => console.log(`listening on port: ${PORT}`));
