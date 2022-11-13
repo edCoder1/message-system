@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  messages_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "${DB_USER}"
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+  adminer_db:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
