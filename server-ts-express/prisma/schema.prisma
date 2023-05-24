@@ -15,17 +15,17 @@ datasource db {
 
 // MODELS
 model User {
-  id      String    @id @default(uuid())
-  name    String
-  comment Comment[]
-  likes   Like[]
+  id       String    @id @default(uuid())
+  name     String
+  comments Comment[]
+  likes    Like[]
 }
 
 model Post {
-  id      String    @id @default(uuid())
-  title   String
-  body    String
-  comment Comment[]
+  id       String    @id @default(uuid())
+  title    String
+  body     String
+  comments Comment[]
 }
 
 model Comment {
@@ -37,7 +37,7 @@ model Comment {
   userId    String
   post      Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String
-  parent    Comment?  @relation("ParentChild", fields: [commentId], references: [id], onDelete: Cascade)
+  parentId  Comment?  @relation("ParentChild", fields: [commentId], references: [id], onDelete: Cascade)
   children  Comment[] @relation("ParentChild")
   commentId String?
   likes     Like[]
