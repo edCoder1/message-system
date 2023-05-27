@@ -21,15 +21,30 @@ app.route('/health')
 app.route('/posts')
   .get(async (req: Request, res: Response) => {
     try {
-      const posts = await prisma.post.findMany();
+      const posts = await prisma.post.findMany({ select: {
+        id: true,
+        title: true
+      }});
 
       // define a response interface
       // define a helper function to handle promises
-      return res.json({ posts });
+      return res.status(Status.OK)
+        .json({
+          status: Status.OK,
+          message: 'Success',
+          data: {
+            posts
+          }
+        });
       
     } catch (error) {
       console.error({ error });
-      return res.json({ error });
+      return res.status(Status.SERVER_ERROR)
+        .json({ 
+          status: Status.SERVER_ERROR,
+          message: 'Error',
+          error
+        });
     }
   })
   .post(async (req: Request, res: Response) => {
@@ -129,6 +144,33 @@ app.route('/posts/:id')
     }
 
 
+  });
+
+app.route('/users')
+  .get(async (req: Request, res: Response) => {
+    try {
+      const users = await prisma.user.findMany();
+
+      // define a response interface
+      // define a helper function to handle promises
+      return res.status(Status.OK)
+        .json({
+          status: Status.OK,
+          message: 'Success',
+          data: {
+            users
+          }
+        });
+      
+    } catch (error) {
+      console.error({ error });
+      return res.status(Status.SERVER_ERROR)
+        .json({ 
+          status: Status.SERVER_ERROR,
+          message: 'Error',
+          error
+        });
+    }
   });
 
 // properly organize this
