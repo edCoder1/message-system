@@ -1,7 +1,7 @@
 import { Comment, Post, PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
-async function seed() {
+async function main() {
   await prisma.post.deleteMany();
   await prisma.user.deleteMany();
 
@@ -49,3 +49,14 @@ async function seed() {
   });
 
 }
+
+main()
+  .then(async () => {
+    console.debug('disconnecting from db after seeding')
+    await prisma.$disconnect()
+  })
+  .catch(async (e) => {
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })
