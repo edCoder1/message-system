@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
 import { IncomingHttpHeaders } from "http";
+import cors from "cors";
 
 dotenv.config();
 
@@ -11,6 +12,12 @@ const PORT: string = process.env.TS_SERVER_PORT || '8001';
 
 const prisma: PrismaClient = new PrismaClient();
 
+// configs
+app.use(cors({
+  origin: process.env.CLIENT_URL
+}));
+
+// routes
 app.route('/health')
   .get((req: Request, res: Response) => {
     console.log('checking health');
